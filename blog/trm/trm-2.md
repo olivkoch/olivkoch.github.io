@@ -24,6 +24,7 @@ Therefore, on this problem at least, a high N_supervision helps but a high L_cyc
 
 The optimal model has 660K parameters.
 
+```
   | Name            | Type            | Params | Mode 
 ------------------------------------------------------------
 0 | input_embedding | CastedEmbedding | 2.3 K  | train
@@ -33,6 +34,7 @@ The optimal model has 660K parameters.
 4 | q_head          | CastedLinear    | 514    | train
 ------------------------------------------------------------
 660 K     Trainable params
+```
 
 [training plots](pics/train-sudoku-1.png)
 [validation plots](pics/validation-sudoku-1.png)
