@@ -23,6 +23,14 @@ We define two datasets:
 
 We prevent leakage by ensuring puzzle uniqueness through hashing. We hash the puzzle solution, not the puzzle itself, to guarantee solution diversity, not just puzzle diversity.
 
+Coverage comparison (standard vs full):
+
+| Grid Size | Total Valid Solutions | Standard Mode | Full Mode |
+|-----------|----------------------|---------------|-----------|
+| 4×4 | 288 | 288 (100%) | 288 (100%) |
+| 6×6 | 28,200,960 | ~207,360 (0.74%) | ~14,929,920 (53%) |
+| 9×9 | ~6.67 × 10²¹ | ~17.4 billion | ~3 trillion |
+
 # Experiment setup
 
 We disable puzzle embeddings for all experiments. We run sweeps across the following hyper-parameters:
