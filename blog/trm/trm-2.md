@@ -17,9 +17,9 @@ The full symmetry group for 6×6 Sudoku includes:
 Full group size: 720 × 6 × 8 × 2 × 36 = 2,488,320
 This means there are roughly 28,200,960 / 2,488,320 ≈ 11-12 equivalence classes of essentially different 6×6 Sudoku grids.
 
-We define two datasets:
-- a dataset skipping band and stack permutations. We randomly subsample 50K of the possible 207,360 unique boards. This is the *Sudoku6x6-base-50K* dataset.
-- a similar-size dataset containing a random 50K subset of all possible 6x6 grids. This is the *Sudoku-full-50K* dataset.
+We define two dataset modes:
+- Standard: a dataset skipping band and stack permutations. This restricts the dataset to a subspace of all possible grids.
+- Full: we sample from all possible 6x6 grids.
 
 We prevent leakage by ensuring puzzle uniqueness through hashing. We hash the puzzle solution, not the puzzle itself, to guarantee solution diversity, not just puzzle diversity.
 
@@ -30,6 +30,11 @@ Coverage comparison (standard vs full):
 | 4×4 | 288 | 288 (100%) | 288 (100%) |
 | 6×6 | 28,200,960 | ~207,360 (0.74%) | ~14,929,920 (53%) |
 | 9×9 | ~6.67 × 10²¹ | ~17.4 billion | ~3 trillion |
+
+We build the following datasets:
+- Sudoku6x6-Standard-50K: 50K randomly sampled from the Standard mode
+- Sudoku6x6-Full-50K: 50K randomly sampled from the Full mode
+- Sudoku6x6-Hybrid-50K: 50K training samples from Standard, 10K validation samples from Full
 
 # Experiment setup
 
