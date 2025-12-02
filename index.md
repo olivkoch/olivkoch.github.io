@@ -3,7 +3,7 @@ layout: default
 title: ML Challenges in Identity Verification (IDV)
 description: An overview of machine learning challenges in identity verification, from fraud detection to bias mitigation.
 ---
-<img src="assets/images/entrust-logo.webp" alt="Logo" class="center-image">
+<img src="assets/images/entrust-logo.webp" alt="Logo" class="center-image" height="150">
 
 Watch our [BBC's "The Secret Genius of Modern Life"](https://www.youtube.com/watch?v=SNQTqJ0vCxk&list=PLIfaEiaPnUv6z7hXXEH1Mt1qR2dNU_I-V&index=1)
 # ML Challenges in Identity Verification (IDV)
