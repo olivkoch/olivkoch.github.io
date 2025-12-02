@@ -8,6 +8,9 @@ description: An overview of machine learning challenges in identity verification
 </div>
 
 Watch our [BBC's "The Secret Genius of Modern Life"](https://www.youtube.com/watch?v=SNQTqJ0vCxk&list=PLIfaEiaPnUv6z7hXXEH1Mt1qR2dNU_I-V&index=1)
+
+We are <a href="https://entrust.wd1.myworkdayjobs.com/en-US/EntrustCareers/details/Senior-Applied-Scientist_R003196">hiring Applied Scientists</a>!
+
 # ML Challenges in Identity Verification (IDV)
 
 Machine Learning for Identity Verification (IDV) spans a wide range of complex challenges. The examples below illustrate some of the typical problems we tackle, from document fraud detection to multilingual understanding, on-device optimization, deepfake detection, and bias mitigation in biometrics. These are not exhaustive—many other challenges exist—but they provide a snapshot of the diversity and depth of issues we address to ensure secure, scalable, and fair identity verification at global scale.
