@@ -1,0 +1,7 @@
+title: ML Challenges in IDV
+description: Machine learning challenges in identity verification
+theme: minima  # or another supported theme
+
+# Optional settings
+markdown: kramdown
+highlighter: rouge
