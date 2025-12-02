@@ -1,0 +1,42 @@
+---
+---
+
+@import "minima";
+
+// Override link colors with Entrust purple
+a {
+  color: #723988;
+  
+  &:visited {
+    color: #5a2d6d;
+  }
+  
+  &:hover {
+    color: #325ABD;
+  }
+}
+
+// Header/footer with Entrust purple
+.site-header {
+  border-top: 5px solid #723988;
+}
+
+.site-title {
+  &:hover {
+    color: #723988;
+  }
+}
+
+.site-nav .page-link:hover {
+  color: #723988;
+}
+
+// Headings
+h1, h2, h3, h4, h5, h6 {
+  color: #723988;
+}
+
+// Footer
+.site-footer {
+  border-top: 1px solid #723988;
+}
