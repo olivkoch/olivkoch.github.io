@@ -3,7 +3,7 @@ layout: default
 title: Olivier Koch
 ---
 
-<img src="assets/img/portrait-graphics-200x200.png" alt="Olivier Koch" style="float: left; width: 100px; border-radius: 50%; margin-right: 20px; margin-bottom: 10px;">
+<img src="assets/img/portrait-graphics-200x200.png" alt="Olivier Koch" style="float: left; border-radius: 50%; margin-right: 20px; margin-bottom: 10px;">
 
 **Computer vision and deep learning in the real world**
 
