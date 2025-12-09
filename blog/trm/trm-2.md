@@ -1,4 +1,14 @@
-TRM vs Sudoku
+RM vs Sudoku
+
+Experiment plan
+-- 
+Benchmark against MLP and CNN
+Evaluate Rope2D and SigReg
+Evaluate kernel-based models
+
+lam1 and lam2 -> sudoku extreme
+lam4 -> sudoku 6x6
+lam5 -> krm
 
 The TRM paper shows results on Sudoku-Extreme. In the spirit of starting simple, we work with a Sudoku6x6. We show that this simpler configuration allows to learn plenty about TRM and its simplest alternative (MLP).
 
@@ -99,3 +109,16 @@ We build an MLP baseline and obtain the following results
 
 - with 5K/1K dataset: validation exact accurcy:
 
+= Experiments
+
+Sudoku 6x6 medium 50K
+Sudoku 9x9 medium 50K
+Sudoku mixed 6x6 9x9 50K
+Sudoku Extreme 10K
+
+Methods
+- CNN
+- MLP
+- TRM
+- TRM-SigReg
+- TRM-SigReg-Rope2D
