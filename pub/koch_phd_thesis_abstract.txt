@@ -1,0 +1,38 @@
+Thesis Title: Body-relative Navigation Guidance using Uncalibrated Cameras
+Author: Olivier Koch, koch@csail.mit.edu
+Date: 9-Feb-2010
+
+Abstract
+
+The ability to navigate through the world is an essential capability to humans.
+In a variety of situations, people do not have the time, the opportunity or the
+capability to learn the layout of the environment before visiting an area.
+Examples include soldiers in the field entering an unknown building,
+firefighters responding to an emergency, or a visually impaired person
+walking through the city. In absence of external source of localization
+(such as GPS), the system must rely on internal sensing to provide
+navigation guidance to the user. In order to address real-world
+situations, the method must provide spatially extended, temporally
+consistent navigation guidance, through cluttered and dynamic environments.
+
+While recent research has largely focused on metric methods based on calibrated
+cameras, the work presented in this thesis demonstrates a novel approach to
+navigation using uncalibrated cameras.  During the first visit of the
+environment, the method builds a topological representation of the user's
+exploration path, which we refer to as the place graph. The method then provides
+navigation guidance from any place to any other in the explored environment. On
+one hand, a localization algorithm determines the location of the user in the
+graph. On the other hand, a rotation guidance algorithm provides a directional
+cue towards the next graph node in the user's body frame.
+
+Our method makes little assumption about the environment except that it contains
+descriptive visual features. It requires no intrinsic or extrinsic camera
+calibration, and relies instead on a method that learns the correlation between
+user rotation and feature correspondence across cameras. We validate our
+approach using several ground truth datasets. In addition, we show that our
+approach is capable of guiding a robot equipped with a local obstacle avoidance
+capability through real, cluttered environments. Finally, we validate our system
+with nine untrained users through several kilometers of indoor environments.
+
+
+    
