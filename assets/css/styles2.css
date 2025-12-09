@@ -241,6 +241,13 @@ legend {
   /* 2 */
 }
 
+.social-icons img {
+  display: inline-block;
+  margin: 0 5px;
+  width: 24px;
+  height: 24px;
+}
+
 /**
  * 1. Correct font family not being inherited in all browsers.
  * 2. Correct font size not being inherited in all browsers.
