@@ -11,6 +11,13 @@ I lead the ML team at [Onfido](http://www.onfido.com). We use computer vision an
 
 I graduated with a PhD at MIT in 2010 under the supervision of [Prof. Seth Teller](https://people.csail.mit.edu/teller/). I was a core member of the [MIT team](http://grandchallenge.mit.edu) at the DARPA Urban Challenge in 2007. My work was published at CVPR, ICCV, ICRA and IJFR. I teach the deep learning class at ENSAE Paris.
 
+<div class="social-icons" style="margin-left: 220px;">
+<a href="https://twitter.com/olivkoch"><img src="assets/img/ctwitter.svg" class="iico"/></a>
+<a href="https://github.com/olivkoch"><img src="assets/img/cgithub.svg" class="iico"/></a>
+<a href="https://medium.com/@olivier.koch"><img src="assets/img/crss.svg" class="iico"/></a>
+<a href="https://linkedin.com/in/olivier-koch"><img src="assets/img/linkedin.svg" class="iico"/></a>
+</div>
+
 <div style="clear: both;"></div>
 
 ---
