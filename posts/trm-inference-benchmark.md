@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Lightweight Representation Learning For Efficient And Scalable Recommendation
+title: Benchmarking inference time for tiny recursive models
 ---
 
 [home](/)
@@ -38,32 +38,48 @@ We therefore benchmark three flavors of TRM (light, medium and heavy) capturing 
 - TRM-Medium: N_supervision_val=4, num_layers=2, H_cycles=2, L_cycles=2, hidden_size=256, num_heads=8
 - TRM-Heavy: N_supervision_val=16, num_layers=4, H_cycles=3, L_cycles=6, hidden_size=512, num_heads=8
 
+Here are the baselines:
+- ResNet-18
+- ResNet-50
+- EfficientNet-B2
+- Diffusion Transformer
 
 We run the benchmark on increasing input size (from 32x32 to 128x128). Each step doubles the surface of the image (i.e. the image width/height is multiplied by sqrt(2)).
 We use a constant batch size of 32. While bigger batches might lead to faster inference, bigger batches lead to OOMs or long computing times for some models. The benchmark is run on an A100 SXM4 40GB.
 
 ### Results
 
-The raw results are linked here:
+The raw results are linked here: [float32](https://github.com/olivkoch/nano-trm/blob/main/results/benchmarks/float32-inference.txt) [bfloat16](https://github.com/olivkoch/nano-trm/blob/main/results/benchmarks/bf16-inference.txt)
 
-Discriminative models are orders of magnitude faster than TRM. This is not surprising because they embed significant optimizations/inductive bias (pooling, patching) that TRM does not have. It makes little sense to try to use a TRM for a pure discrimination task.
+**Discriminative models are orders of magnitude faster than TRM, but TRM and Diffusion Transformers are in the same ballpark** This is not surprising because they embed significant optimizations/inductive bias (pooling, patching) that TRM does not have. It makes little sense to try to use a TRM for a pure discrimination task. 
+A medium TRM is in the ballpark of a diffusion transformer. A lighter one is much faster, while a heavier one is much slower.
 
-<center>
-  <img src="img/trm_benchmark_inference_speed_1.png" alt="">
-</center>
+| Input Size | ResNet18 (Discriminative) | TRM-Medium (Reasoning) | DiT-Medium (Generative) | Speedup (ResNet vs TRM) | Speedup (TRM vs DiT) |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **32x32** | 66,941 img/s | 2,690 img/s | 1,255 img/s | **25x** | **2.1x** |
+| **46x46** | 37,767 img/s | 1,133 img/s | 517 img/s | **33x** | **2.2x** |
+| **64x64** | 33,616 img/s | 435 img/s | 223 img/s | **77x** | **2.0x** |
+| **90x90** | 33,227 img/s | 125 img/s | 75 img/s | **266x** | **1.7x** |
+| **128x128** | 23,934 img/s | 35.6 img/s | 23.4 img/s | **672x** | **1.5x** |
 
-| Input Size | ResNet18 (Discriminative) | TRM-Medium (Reasoning) | DiT-Medium (Generative) | Speedup (ResNet vs TRM) |
+**BFloat16 is a "Free Lunch" for TRM** It not only makes inference much faster (first table) but reduces the quadratic complexity through FlashAttention (second table).
+
+| Input Size | TRM-Medium (FP32) | TRM-Medium (BF16) | Speedup |
+| :--- | :--- | :--- | :--- |
+| **32x32** | 721 img/s | 2,690 img/s | **3.7x** |
+| **46x46** | 195 img/s | 1,133 img/s | **5.8x** |
+| **64x64** | 58.6 img/s | 435 img/s | **7.4x** |
+| **90x90** | 15.6 img/s | 125 img/s | **8.0x** |
+| **128x128** | 3.91 img/s | 35.6 img/s | **9.1x** |
+
+| Input Size | FP32 Throughput | FP32 Slowdown (vs 32x32) | BF16 Throughput | BF16 Slowdown (vs 32x32) |
 | :--- | :--- | :--- | :--- | :--- |
-| **32x32** | 66,941 img/s | 2,690 img/s | 1,255 img/s | **25x** |
-| **46x46** | 37,767 img/s | 1,133 img/s | 517 img/s | **33x** |
-| **64x64** | 33,616 img/s | 435 img/s | 223 img/s | **77x** |
-| **90x90** | 33,227 img/s | 125 img/s | 75 img/s | **265x** |
-| **128x128** | 23,934 img/s | 35.6 img/s | 23.4 img/s | **672x** |
+| **32x32** | 721 img/s | **1.0x** | 2,690 img/s | **1.0x** |
+| **46x46** | 195 img/s | **3.7x** | 1,133 img/s | **2.4x** |
+| **64x64** | 58.6 img/s | **12.3x** | 435 img/s | **6.2x** |
+| **90x90** | 15.6 img/s | **46.4x** | 125 img/s | **21.5x** |
+| **128x128** | 3.91 img/s | **184.4x** | 35.6 img/s | **75.5x** |
 
-- Because a TRM is a lot slower than a discriminative model, it'd better deliver outstanding upsides on the performance side to be worth it! Even "general" benchmarks such as ARC-AGI2 seem not to resist to the vision transfomer (ARC is a vision problem). [1]
-- BFloat16 is a "Free Lunch" for Transformers (7x–9x Speedup) It not only makes inference much faster but enables non-quadratic complexity
-- A medium TRM is in the ballpark of a diffusion transformer. A lighter one is much faster, while a heavier one is much slower.
+### Conclusion
 
-[1] Everything is obvious in the hindsight, but it is not too surprising that a vision transformer does well on ARC-AGI2 given that this model has been pre-trained on a vast amount of data/problems that could overlap with ARC AGI tasks. The past decade(s) show that for any given problem, a sufficiently well pretrained model outperforms any alternative (essentially, the bitter lesson). Intuitively, thinking models that are trained from scratch should shine in areas where robustness, not just raw performance, matters.
-
-
+A TRM is orders of magniture slower than a ResNet at inference time. This is not surprising given the differences in architecture. On the other hand, TRM and Diffusion Transformers are in the same ballpark. The bfloat casting brings massive benefits to TRM and should be used by default.
