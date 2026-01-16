@@ -1436,22 +1436,51 @@ aside ul li {
 .post .homepage-post-footer .tags ul li a {
   white-space: nowrap;
 }
+
+/* Improved Table Styling */
 .post table {
-  border-bottom: 1px solid #ddd;
-  width: 100%;
   border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  min-width: 100%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05); /* Subtle depth */
+  border-radius: 6px;
+  overflow: hidden; /* Ensures borders wrap around corners */
 }
+
+/* Header Styling */
+.post table thead tr {
+  background-color: #333333; /* Dark header to separate from data */
+  color: #ffffff;
+  text-align: left;
+  font-weight: bold;
+}
+
+/* Cell Spacing (The most important fix) */
+.post table th,
+.post table td {
+  padding: 12px 15px; /* Increased from 4px for readability */
+  border-bottom: 1px solid #dddddd;
+}
+
+/* Remove the old default borders if they persist */
 .post table, .post th, .post td {
-  border-top: 1px solid #ddd;
+  border-top: none;
 }
-.post table th, .post table td {
-  padding: 4px 5px;
+
+/* Zebra Striping for readability */
+.post table tbody tr:nth-of-type(even) {
+  background-color: #f9f9f9;
 }
-.post table p:first-child {
-  margin-top: 0px;
+
+/* Slight hover effect to help track rows across wide tables */
+.post table tbody tr:hover {
+  background-color: #f1f1f1;
 }
-.post table p:last-child {
-  margin-bottom: 0px;
+
+/* Stronger bottom border to finish the table */
+.post table tbody tr:last-of-type {
+  border-bottom: 2px solid #333333;
 }
 
 .posthaven-share-links .posthaven-upvote,
