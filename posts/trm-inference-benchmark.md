@@ -51,7 +51,7 @@ We use a constant batch size of 32. While bigger batches might lead to faster in
 
 The raw results are linked here: [float32](https://github.com/olivkoch/nano-trm/blob/main/results/benchmarks/float32-inference.txt) [bfloat16](https://github.com/olivkoch/nano-trm/blob/main/results/benchmarks/bf16-inference.txt)
 
-**Discriminative models are orders of magnitude faster than TRM, but TRM and Diffusion Transformers are in the same ballpark** This is not surprising because they embed significant optimizations/inductive bias (pooling, patching) that TRM does not have. It makes little sense to try to use a TRM for a pure discrimination task. 
+**Learning #1: Discriminative models are orders of magnitude faster than TRM, but TRM and Diffusion Transformers are in the same ballpark** This is not surprising because they embed significant optimizations/inductive bias (pooling, patching) that TRM does not have. It makes little sense to try to use a TRM for a pure discrimination task. 
 A medium TRM is in the ballpark of a diffusion transformer. A lighter one is much faster, while a heavier one is much slower.
 
 | Input Size | ResNet18 (Discriminative) | TRM-Medium (Reasoning) | DiT-Medium (Generative) | Speedup (ResNet vs TRM) | Speedup (TRM vs DiT) |
@@ -62,7 +62,7 @@ A medium TRM is in the ballpark of a diffusion transformer. A lighter one is muc
 | **90x90** | 33,227 img/s | 125 img/s | 75 img/s | **266x** | **1.7x** |
 | **128x128** | 23,934 img/s | 35.6 img/s | 23.4 img/s | **672x** | **1.5x** |
 
-**BFloat16 is a "Free Lunch" for TRM** It not only makes inference much faster (first table) but reduces the quadratic complexity through FlashAttention (second table).
+**Learning #2: BFloat16 is a "Free Lunch" for TRM** It not only makes inference much faster (first table) but reduces the quadratic complexity through FlashAttention (second table).
 
 | Input Size | TRM-Medium (FP32) | TRM-Medium (BF16) | Speedup |
 | :--- | :--- | :--- | :--- |
@@ -71,6 +71,8 @@ A medium TRM is in the ballpark of a diffusion transformer. A lighter one is muc
 | **64x64** | 58.6 img/s | 435 img/s | **7.4x** |
 | **90x90** | 15.6 img/s | 125 img/s | **8.0x** |
 | **128x128** | 3.91 img/s | 35.6 img/s | **9.1x** |
+
+The bfloat16 casting breaks the "quadratic wall" of full attention:
 
 | Input Size | FP32 Throughput | FP32 Slowdown (vs 32x32) | BF16 Throughput | BF16 Slowdown (vs 32x32) |
 | :--- | :--- | :--- | :--- | :--- |
