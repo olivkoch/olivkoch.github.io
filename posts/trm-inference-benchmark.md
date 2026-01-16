@@ -6,17 +6,19 @@ title: Lightweight Representation Learning For Efficient And Scalable Recommenda
 [home](/)
 
 ## Benchmarking inference time for tiny recursive models
-    
-In this article, we provide a benchmark of the computing needs of a Tiny Recursive Models. We focus on the inference time. A separate article will focus on training time.
+   
+TRM have achieved impressive results on various puzzle benchmarks but come with a significant compute footprint. This is a series of two posts that cover the topic, from the inference and training standpoint.
+
+This post focuses on the inference time. Here is the link to the [training one](trm-training-benchmark.html).
 
 TRM is compute-intensive by design since it iterates multiple times over the same data (both a training time and inference time) and uses attention over the entire input (no pooling or patching). 
     As such, TRM is significantly more expensive than computer vision baselines and is not expected to be a competitive alternative. TRM is more useful for tasks that require reasoning (puzzle, math, planning).
-TRM benefits from FlashAttentation natively on Ampere GPUs (torch.nn.functional.scaled_dot_product_attention).
-We expect inference time to grow quadratically with the input size with float32, but linearly with bfloat16.
-In 2D, if the input size doubles (32x32 -> 64x64), the seq length x16.
-Let’s check all of this!
 
-We are specifically interested in how TRM fares against two types of alternatives:
+TRM benefits from FlashAttentation natively on Ampere GPUs (through `torch.nn.functional.scaled_dot_product_attention`). We expect inference time to grow quadratically with the input size with float32, but less so for with bfloat16.
+
+### Setup
+
+We use two types of baselines:
 - discriminative models (e.g. resnet)
 - generative models (e.g. diffusers)
 
@@ -28,13 +30,27 @@ Here is our setup:
 - We enable compilation by default (mode=default for TRM due to graph breaks, reduce-overhead for all other models)
 - We run the benchmark with both torch.float32 vs torch.bfloat16. This makes a big difference as bfloat16 enables flash attention with torch>=2.0
 
-TRM has several hyper-parameters that have significant influence on its reasoning capacity but also compute requirements. Specifically, H_cycles, L_cycles, num_layers and the number of supervision loops.
-We therefore benchmark three flavors of TRM (light, medium and heavy) capturing a large spectrum of complexity.
+Link to the [source code](https://github.com/olivkoch/nano-trm/blob/main/tests/src/nn/benchmarks/benchmark_trm_inference.py)
 
-We run the benchmark of increasing input size (from 32x32 to 128x128). Each step doubles the surface of the image (i.e. the image width/height is multiplied by sqrt(2)).
-We use a constant batch size of 32. While bigger batches might lead to faster inference, we run into OOMs and computing time limits for some models.
+TRM has several hyper-parameters that have significant influence on its reasoning capacity but also compute requirements. Specifically, H_cycles, L_cycles, num_layers and the number of supervision loops.
+We therefore benchmark three flavors of TRM (light, medium and heavy) capturing a large spectrum of complexity:
+- TRM-Light: N_supervision_val=2, num_layers=1, H_cycles=1, L_cycles=1, hidden_size=128, num_heads=4
+- TRM-Medium: N_supervision_val=4, num_layers=2, H_cycles=2, L_cycles=2, hidden_size=256, num_heads=8
+- TRM-Heavy: N_supervision_val=16, num_layers=4, H_cycles=3, L_cycles=6, hidden_size=512, num_heads=8
+
+
+We run the benchmark on increasing input size (from 32x32 to 128x128). Each step doubles the surface of the image (i.e. the image width/height is multiplied by sqrt(2)).
+We use a constant batch size of 32. While bigger batches might lead to faster inference, bigger batches lead to OOMs or long computing times for some models. The benchmark is run on an A100 SXM4 40GB.
+
+### Results
+
+The raw results are linked here:
 
 Discriminative models are orders of magnitude faster than TRM. This is not surprising because they embed significant optimizations/inductive bias (pooling, patching) that TRM does not have. It makes little sense to try to use a TRM for a pure discrimination task.
+
+<center>
+  <img src="img/trm_benchmark_inference_speed_1.png" alt="">
+</center>
 
 | Input Size | ResNet18 (Discriminative) | TRM-Medium (Reasoning) | DiT-Medium (Generative) | Speedup (ResNet vs TRM) |
 | :--- | :--- | :--- | :--- | :--- |
