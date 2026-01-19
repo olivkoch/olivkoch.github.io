@@ -82,6 +82,115 @@ The bfloat16 casting breaks the "quadratic wall" of full attention:
 | **90x90** | 15.6 img/s | **46.4x** | 125 img/s | **21.5x** |
 | **128x128** | 3.91 img/s | **184.4x** | 35.6 img/s | **75.5x** |
 
+### Profiling TRM
+
+Let's go deeper into TRM and analyze its inference time with respect to its main hyperparameters. We run inference with a fixed batch size (512) and fixed input (32x32). We get the following results.
+
+# TRM Inference Profiling Results
+
+## Configuration
+
+| Setting | Value |
+|---------|-------|
+| Device | CUDA |
+| Precision | BF16 |
+| Input | 32×32 (seq_len=1024) |
+| Batch size | 512 |
+
+**Base config:** hidden_size=256, num_layers=2, H_cycles=2, L_cycles=2, N_supervision_val=4
+
+---
+
+## H_cycles (Horizontal Iterations)
+
+| H_cycles | Latency (ms) | Std (ms) | Throughput (samples/s) | Params |
+|----------|--------------|----------|------------------------|--------|
+| 1 | 278.52 | 0.52 | 1838.3 | 1.44M |
+| 2 | 558.58 | 0.64 | 916.6 | 1.44M |
+| 3 | 840.24 | 0.89 | 609.3 | 1.44M |
+| 4 | 1123.33 | 1.97 | 455.8 | 1.44M |
+| 6 | 1688.67 | 1.79 | 303.2 | 1.44M |
+| 8 | 2247.20 | 0.98 | 227.8 | 1.44M |
+
+---
+
+## L_cycles (Vertical Iterations)
+
+| L_cycles | Latency (ms) | Std (ms) | Throughput (samples/s) | Params |
+|----------|--------------|----------|------------------------|--------|
+| 1 | 374.43 | 0.48 | 1367.4 | 1.44M |
+| 2 | 562.83 | 0.67 | 909.7 | 1.44M |
+| 3 | 749.99 | 0.59 | 682.7 | 1.44M |
+| 4 | 932.28 | 0.92 | 549.2 | 1.44M |
+| 6 | 1306.26 | 1.83 | 392.0 | 1.44M |
+| 8 | 1679.84 | 1.79 | 304.8 | 1.44M |
+
+---
+
+## num_layers
+
+| num_layers | Latency (ms) | Std (ms) | Throughput (samples/s) | Params |
+|------------|--------------|----------|------------------------|--------|
+| 1 | 284.42 | 0.41 | 1800.2 | 0.79M |
+| 2 | 559.89 | 0.62 | 914.5 | 1.44M |
+| 3 | 833.26 | 0.74 | 614.5 | 2.10M |
+| 4 | 1108.27 | 1.19 | 462.0 | 2.75M |
+| 6 | 1658.76 | 1.71 | 308.7 | 4.06M |
+
+---
+
+## N_supervision_val (Reasoning Steps)
+
+| N_supervision | Latency (ms) | Std (ms) | Throughput (samples/s) | Params |
+|---------------|--------------|----------|------------------------|--------|
+| 1 | 139.55 | 0.13 | 3668.8 | 1.44M |
+| 2 | 279.26 | 0.28 | 1833.4 | 1.44M |
+| 4 | 559.65 | 0.45 | 914.9 | 1.44M |
+| 8 | 1119.74 | 1.03 | 457.2 | 1.44M |
+| 12 | 1682.59 | 3.14 | 304.3 | 1.44M |
+| 16 | 2246.39 | 5.05 | 227.9 | 1.44M |
+
+---
+
+## hidden_size
+
+| hidden_size | Latency (ms) | Std (ms) | Throughput (samples/s) | Params |
+|-------------|--------------|----------|------------------------|--------|
+| 128 | 279.59 | 0.04 | 1831.2 | 0.39M |
+| 192 | 379.83 | 0.76 | 1348.0 | 0.69M |
+| 256 | 559.38 | 0.48 | 915.3 | 1.44M |
+| 384 | 857.03 | 1.35 | 597.4 | 2.56M |
+| 512 | 1113.58 | 1.13 | 459.8 | 4.72M |
+
+---
+
+## Summary
+
+| Parameter | Scaling | 1× → Max | Slowdown |
+|-----------|---------|----------|----------|
+| H_cycles | Linear | 1 → 8 | 8.1× |
+| L_cycles | Sublinear | 1 → 8 | 4.5× |
+| num_layers | Linear | 1 → 6 | 5.8× |
+| N_supervision | Linear | 1 → 16 | 16.1× |
+| hidden_size | Subquadratic | 128 → 512 | 4.0× |
+
+This yields interesting findings:
+
+Interesting findings:
+
+- **L_cycles is cheaper than H_cycles** - At value=8, L_cycles achieves 304.8 samples/s vs H_cycles at 227.8 samples/s. This suggests L_cycles (inner loop) has less overhead per iteration than H_cycles (outer loop which resets z_H).
+- **N_supervision scales perfectly linearly** - No overhead between supervision steps, just pure repeated computation.
+- **hidden_size scaling is favorable** - Going from 128→512 (4x) only costs 4x in throughput despite 12x more parameters. The compute is dominated by sequence length, not hidden dimension at this scale.
+
+<p align="center">
+<img src="img/trm-inference-scaling.png" height=500>
+</p>
+
 ### Conclusion
 
-A TRM is orders of magniture slower than a ResNet at inference time. This is not surprising given the differences in architecture. On the other hand, TRM and Diffusion Transformers are in the same ballpark. The bfloat casting brings massive benefits to TRM and should be used by default.
+A TRM is orders of magniture slower than a ResNet at inference time. This is not surprising given the differences in architecture. On the other hand, TRM and Diffusion Transformers are in the same ballpark. 
+If you are going to use TRM for inference:
+- The bfloat casting brings massive benefits to TRM and should be used by default.
+- L_cycles are cheaper than H_cycles
+- hidden_size scales sub-quadratically
+
