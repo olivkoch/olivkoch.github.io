@@ -1225,7 +1225,7 @@ aside ul li {
 .post {
   margin: 0 auto;
   max-width: 100%;
-  width: 90%;
+  width: 95%;a
   font-size: 17px;
 }
 .post .posthaven-post-body {
@@ -1335,14 +1335,13 @@ aside ul li {
   margin-top: 30px;
 }
 .post .posthaven-post-body h1 {
-  font-size: 22px;
+  font-size: 23px;
 }
 .post .posthaven-post-body h2 {
-  font-size: 20px;
+  font-size: 21px;
 }
 .post .posthaven-post-body h3 {
-  font-size: 22px;
-  font-style: italic;
+  font-size: 19px;
 }
 .post .posthaven-post-body a {
   border-bottom: dashed 2px rgba(0, 0, 0, 0.25);
@@ -2009,7 +2008,7 @@ section.subhead h3 {
 *  Posts
 *********************************************************/
 #main {
-  margin: 0 auto 100px;
+  margin: 0 auto 200px;
 }
 
 /*********************************************************
