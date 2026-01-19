@@ -174,21 +174,20 @@ Let's go deeper into TRM and analyze its inference time with respect to its main
 | N_supervision | Linear | 1 → 16 | 16.1× |
 | hidden_size | Subquadratic | 128 → 512 | 4.0× |
 
-This yields interesting findings:
+<p align="center">
+<img src="img/trm-inference-scaling.png" height=500>
+</p>
 
-Interesting findings:
+This yields interesting findings:
 
 - **L_cycles is cheaper than H_cycles** - At value=8, L_cycles achieves 304.8 samples/s vs H_cycles at 227.8 samples/s. This suggests L_cycles (inner loop) has less overhead per iteration than H_cycles (outer loop which resets z_H).
 - **N_supervision scales perfectly linearly** - No overhead between supervision steps, just pure repeated computation.
 - **hidden_size scaling is favorable** - Going from 128→512 (4x) only costs 4x in throughput despite 12x more parameters. The compute is dominated by sequence length, not hidden dimension at this scale.
 
-<p align="center">
-<img src="img/trm-inference-scaling.png" height=500>
-</p>
-
 ### Conclusion
 
 A TRM is orders of magniture slower than a ResNet at inference time. This is not surprising given the differences in architecture. On the other hand, TRM and Diffusion Transformers are in the same ballpark. 
+
 If you are going to use TRM for inference:
 - The bfloat casting brings massive benefits to TRM and should be used by default.
 - L_cycles are cheaper than H_cycles
