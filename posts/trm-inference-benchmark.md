@@ -191,7 +191,7 @@ This yields interesting findings:
 A TRM is orders of magniture slower than a ResNet at inference time. This is not surprising given the differences in architecture. On the other hand, TRM and Diffusion Transformers are in the same ballpark. 
 
 If you are going to use TRM for inference:
-- The bfloat casting brings massive benefits to TRM and should be used by default.
+- Use bfloat16 casting!
 - L_cycles are cheaper than H_cycles
 - hidden_size scales sub-quadratically
 
