@@ -175,7 +175,9 @@ Let's go deeper into TRM and analyze its inference time with respect to its main
 | hidden_size | Subquadratic | 128 → 512 | 4.0× |
 
 <p align="center">
+<a href="img/trm-inference-scaling.png">
 <img src="img/trm-inference-scaling.png" width="100%">
+</a>
 </p>
 
 This yields interesting findings:
