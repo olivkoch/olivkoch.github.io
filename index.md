@@ -57,7 +57,7 @@ Also on [Medium](https://medium.com/@olivier.koch)
 
 ## Publications
 
-- [Lightweight representation learning for efficient and scalable recommendation](https://arxiv.org/abs/2101.00870v2)
+- [Lightweight representation learning for efficient and scalable recommendation](https://arxiv.org/abs/2101.00870v2), arXiv:2101.00870v2, Nov 2021
 - [Ground robot navigation using uncalibrated cameras](https://dspace.mit.edu/bitstream/handle/1721.1/73150/Teller_Ground%20robot%20navigation.pdf), ICRA 2010
 - [PhD Thesis](pub/koch_phd_thesis_2010.pdf), 2010
 - [Body-relative navigation guidance using uncalibrated cameras](pub/koch_teller_iccv2009.pdf), ICCV 2009 · [slides](pub/navguide-slides.pdf)
