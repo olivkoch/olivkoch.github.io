@@ -186,6 +186,35 @@ This yields interesting findings:
 - **N_supervision scales perfectly linearly** - No overhead between supervision steps, just pure repeated computation.
 - **hidden_size scaling is favorable** - Going from 128→512 (4x) only costs 4x in throughput despite 12x more parameters. The compute is dominated by sequence length, not hidden dimension at this scale.
 
+## Profiling TRM
+
+We now profile the TRM inference with default compilation enabled. Below is the inference with `batch_size=2048` on a Sudoku 6x6 dataset.
+
+```
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------
+                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg    # of Calls
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------
+## Call CompiledFxGraph f2zo6nbvshz37puefvfjybe6j6bk...         0.00%       0.000us         0.00%       0.000us       0.000us     275.128ms        95.26%     275.128ms      91.709ms             3
+                                          ProfilerStep*         0.06%     198.373us        58.75%     204.918ms      68.306ms       0.000us         0.00%     226.282ms      75.427ms             3
+                                     trm_inference_step         0.12%     422.042us        58.70%     204.720ms      68.240ms       0.000us         0.00%     226.282ms      75.427ms             3
+                             Torch-Compiled Region: 0/0         0.13%     451.031us        58.51%     204.067ms      68.022ms       0.000us         0.00%     226.282ms      75.427ms             3
+## Call CompiledFxGraph f2zo6nbvshz37puefvfjybe6j6bk...        44.71%     155.922ms        58.34%     203.469ms      67.823ms       0.000us         0.00%     226.282ms      75.427ms             3
+void pytorch_flash::flash_fwd_kernel<Flash_fwd_kerne...         0.00%       0.000us         0.00%       0.000us       0.000us     108.622ms        37.61%     108.622ms     674.668us           161
+              aten::_scaled_dot_product_flash_attention         0.47%       1.622ms         2.88%      10.043ms      79.703us       0.000us         0.00%      85.188ms     676.098us           126
+                         aten::_flash_attention_forward         0.60%       2.094ms         1.87%       6.529ms      51.819us      85.188ms        29.50%      85.188ms     676.098us           126
+ampere_bf16_s1688gemm_bf16_128x128_ldg8_f2f_stages_3...         0.00%       0.000us         0.00%       0.000us       0.000us      80.024ms        27.71%      80.024ms     166.025us           482
+                                               aten::mm         3.06%      10.666ms         4.28%      14.935ms      29.284us      76.490ms        26.48%      76.490ms     149.981us           510
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------
+Self CPU time total: 348.774ms
+Self CUDA time total: 288.819ms
+```
+
+This profile is healthy:
+
+- Most of the CPU time is spent in `Call CompiledFxGraph`. This is the overhead of the Python runtime handing off the entire "fused" TRM reasoning loop to the GPU driver.
+- The GPU is spending most of its time on core computation (37.6% on flash attention, 27.7% on matrix multiplication
+- The `ampere_bf16_s1688gemm` kernels are the "dense" math—the Linear layers in the MLP and the Q/K/V projections. These are utilizing the Tensor Cores (indicated by the s1688 nomenclature).
+
 ### Conclusion
 
 A TRM is orders of magniture slower than a ResNet at inference time. This is not surprising given the differences in architecture. On the other hand, TRM and Diffusion Transformers are in the same ballpark. 
