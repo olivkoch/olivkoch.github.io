@@ -5,9 +5,7 @@ title: Benchmarking inference time for tiny recursive models
 
 [home](/)
 
-TRM have achieved impressive results on various puzzle benchmarks but come with a significant compute footprint. This is a series of two posts that cover the topic, from the inference and training standpoint.
-
-This post focuses on the inference time. Here is the link to the [training one](trm-training-benchmark.html).
+TRM have achieved impressive results on various puzzle benchmarks but come with a significant compute footprint. This article focuses on the *inference* cost of TRM.
 
 TRM is compute-intensive by design since it iterates multiple times over the same data (both a training time and inference time) and uses attention over the entire input (no pooling or patching). 
     As such, TRM is significantly more expensive than computer vision baselines and is not expected to be a competitive alternative. TRM is more useful for tasks that require reasoning (puzzle, math, planning).
