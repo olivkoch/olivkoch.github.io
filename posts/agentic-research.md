@@ -11,7 +11,7 @@ There is a striking similarity between what is happening today with agents and t
 
 Back in 2015, deep learning was the new shiny thing. ImageNet came out in 2009, followed by AlexNet in 2012. Yet, specialists kept looking at this as hype for quite a few years. Fast forward a few years later, and deep learning had taken over the world.
 
-A fundamental reason for this push back was that the machine was taking over a fundamental role of those specialists, thereby challenging their place in the ecosystem. Before deep learning, specialists hand-crafted features manually. Deep learning changed all of that, finding patterns in the data automatically.
+A fundamental reason for this push back was that the machine was taking over a critical role of those specialists, thereby challenging their place in the ecosystem. Before deep learning, specialists hand-crafted features manually. Deep learning changed all of that, finding patterns in the data automatically.
 
 Today, the new wave of agents yields a similar pattern, challenging the place of specialists at a new level of abstraction: now, agents can find new research ideas, implement a new solution and analyze the results on their own.
 
