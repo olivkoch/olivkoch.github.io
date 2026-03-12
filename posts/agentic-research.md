@@ -1,11 +1,11 @@
 ---
 layout: default
-title: The agentic world of Research
+title: The Age of Agentic Research
 ---
 
 [home](/)
 
-## The agentic world of Research
+## The Age of Agentic Research
 
 There is a striking similarity between what is happening today with agents and the deep learning revolution from a decade ago.
 
