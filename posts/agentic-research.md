@@ -35,6 +35,6 @@ The recent release of [autoresearch](https://github.com/karpathy/autoresearch) b
 
 For product-centric companies, the opportunity is in reinforcing their current moats (proprietary data, customer base, domain expertise), starting on the edges of the product portfolio, rather than a complete overhaul of their legacy stack. 
 
-The best option consists in working on a few atomic problems, building confidence and a good understanding of the tooling, and then expanding into the product outside in. Getting hands-on with toy problems is likely optimal. Whichever way you choose, not trying anything is likely the worse option.
+The best option consists in working on a few atomic problems, building confidence and a good understanding of the tooling, and then expanding into the product inside out. Getting hands-on with toy problems is likely optimal. Whichever way you choose, not trying anything is likely the worse option.
 
 [Tweet](https://twitter.com/share?ref_src=twsrc%5Etfw)
