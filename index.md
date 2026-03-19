@@ -22,6 +22,7 @@ I graduated with a PhD at MIT in 2010 under the supervision of [Prof. Seth Telle
 
 ---
 
+- Mar 2026 · [gumbel-mcts is out!](https://github.com/olivkoch/gumbel-mcts)
 - Mar 2026 · [The Age of Agentic Research](posts/agentic-research.html)
 - Dec 2025 · [nano-trm is out!](https://www.github.com/olivkoch/nano-trm)
 - Sept 2025 · [Identity in the Age of Deepfakes](pub/identity-in-the-age-of-deepfakes.pdf)
