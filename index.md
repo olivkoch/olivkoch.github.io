@@ -28,7 +28,7 @@ I graduated with a PhD at MIT in 2010 under the supervision of [Prof. Seth Telle
 - Sept 2025 · [Identity in the Age of Deepfakes](pub/identity-in-the-age-of-deepfakes.pdf)
 - Sept 2024 · [The Handbook of Applied AI teams](https://github.com/olivkoch/applied-science-handbook)
 - Jan 2023 · [AI has crossed the Rubicon. Now what?](posts/ai-rubicon.html)
-- Dec 2022 · [Building a recommendation engine from scratch](posts/reco-from-scratch.html)
+- Dec 2022 · [Lightweight representation learning for efficient and scalable recommendation](https://arxiv.org/abs/2101.00870)
 - Sept 2022 · [Building without Bias at Onfido](pub/2022-onfido-bias-whitepaper.pdf)
 - Aug 2022 · [Where self-driving is headed](posts/self-driving-future.html)
 - Jan 2022 · [Lightweight Representation Learning For Efficient And Scalable Recommendation](posts/criteo-led.html)
