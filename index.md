@@ -64,6 +64,7 @@ Also on [Medium](https://medium.com/@olivier.koch)
 - [Body-relative navigation guidance using uncalibrated cameras](pub/koch_teller_iccv2009.pdf), ICCV 2009 · [slides](pub/navguide-slides.pdf)
 - [A perception-driven autonomous urban vehicle](pub/ijfr_2008.pdf), IJFR 2008
 - [Wide-area egomotion estimation from known 3d structure](pub/koch_teller_cvpr2007.pdf), CVPR 2007
+- [Wide-Area Egomotion from Omnidirectional Video and Coarse 3D Structure](pub/koch_ms2007.pdf), M.S. Thesis, 2007
 - [SLYK: A Transparent Fault-Tolerant Migration Platform](pub/slyk_2005.pdf), MIT Technical Report, 2005
 - [The City Scanning Project](pub/cityReport_2002.pdf), MIT Technical Report, 2002
 
