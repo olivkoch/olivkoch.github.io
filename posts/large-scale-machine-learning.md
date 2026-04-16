@@ -9,7 +9,7 @@ title: Large-scale machine learning: the price of time
 
 What defines large-scale machine learning?  This seemingly innocent question is often answered with petabytes of data and hundreds of GPUs. It turns out that large-scale machine learning does not have much to do with all of that. In 2013, Leon Bottou gave [a class](https://bigdata2013.sciencesconf.org/conference/bigdata2013/pages/bottou.pdf) on the topic at Institut Poincar&eacute;. The class is still as relevant today as it was then. This post is a short summary of it.
 
-**The fundamental hypothesis of machine learning **
+**The fundamental hypothesis of machine learning**
 
 Most of the recent progress in machine learning progress has been driven by the paradigm of learning by which we train a model &#402; from existing data. We estimate &#402; using a training set and measure the final performance using the test set. The validation set is used for determining the parameters of the model.
 
@@ -43,7 +43,7 @@ This seemingly simple definition of large-scale machine learning is quite genera
 
 With this definition in mind, you could be working on a truly gigantic dataset such as the entire Google StreetView database and have access to a supercomputer allowing to iterate extremely fast on the full dataset, you would still not be doing large-scale machine learning.
 
-**The constraint of time **
+**The constraint of time**
 
 Being constrained by time, large-scale learning induces more complex tradeoffs than small-scale learning. We need to make an optimal choice of F, n and &#961; within a given time budget. Because time is the bottleneck, we can only run a limited number of experiments per day.  Therefore, these choices are often made concurrently. If we choose to decrease the optimization error &#961;, a constant time budget forces us to reduce either the complexity of the model or the number of examples, which in turns has adverse effects on the estimation and approximation errors.
 
@@ -51,7 +51,7 @@ In practice, we often proceed by sampling all possible configurations and end up
 
 ![](large-scale-machine-learning/2.png)
 
-**Focusing on the data and the task **
+**Focusing on the data and the task**
 
 Another striking difference between small-scale and large-scale machine learning are the focus of the effort. With small-scale machine learning, a lot of the focus is on the model and the algorithms. With large-scale machine learning, the focus shifts towards the data and the task. The time spent on the task and the data is significant and often much larger than anticipated.
 
@@ -66,11 +66,11 @@ It is therefore best to focus on queries near the boundary of the known area (a 
 
 ![](large-scale-machine-learning/3.png)
 
-**Engineering learning systems, at scale **
+**Engineering learning systems, at scale**
 
 The typical approach to solving a complex problem in large-scale machine learning is to subdivide it into smaller subproblems and solving each of them separately. The training strategy can be either (1) training of each module independently (2) sequential training (use input of module n and train module n+1 with it), or (3) global training. Global training is harder but often better. Training [neural networks for self-driving cars](https://www.youtube.com/watch?v=IHH47nZ7FZU&feature=youtu.be) provides a rich example of global training at scale. Global training comes with a number of challenges, however, such as some modules training faster than the others, data imbalance and modules overtaking on the learning capacity of the whole network.
 
-**Deep learning and transfer learning **
+**Deep learning and transfer learning**
 
 One of the great discoveries of deep learning is how well pre-trained networks work for a task they have not be trained for. In computer vision for instance, surprisingly good performance can be obtained using the last layers of convnets trained on ImageNet. Generic unsupervised subtasks seem to work well.
 
