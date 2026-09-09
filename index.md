@@ -7,7 +7,7 @@ title: Olivier Koch
 
 **Computer vision and deep learning in the real world**
 
-I lead the ML team at [Onfido](http://www.onfido.com). We use computer vision and deep learning for online identity verification. From 2015 to 2021, I led the machine learning team for recommendation at Criteo. From 2010 to 2014, I led the computer vision team at Thales Optronics in France.
+I lead Applied Science projects at Mistral. Prior to that, I led ML teams at <a href="https://www.onfido.com">Onfido</a> (acquired by <a href="https://www.entrust.com">Entrust</a>), <a href="https://www.criteo.com">Criteo</a> and <a href="https://www.thales.com">Thales</a>, with a focus on shipping AI into the real world.
 
 I graduated with a PhD at MIT in 2010 under the supervision of [Prof. Seth Teller](https://people.csail.mit.edu/teller/). I was a core member of the [MIT team](http://grandchallenge.mit.edu) at the DARPA Urban Challenge in 2007. My work was published at CVPR, ICCV, ICRA and IJFR. I teach the deep learning class at ENSAE Paris.
 
