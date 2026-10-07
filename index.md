@@ -22,7 +22,7 @@ I graduated with a PhD at MIT in 2010 under the supervision of [Prof. Seth Telle
 
 ---
 
-- Mar 2026 · [gumbel-mcts is out!](https://github.com/olivkoch/gumbel-mcts)
+- Oct 2026 · [gumbel-mcts v0.2 is out!](https://github.com/olivkoch/gumbel-mcts)
 - Mar 2026 · [The Age of Agentic Research](posts/agentic-research.html)
 - Dec 2025 · [nano-trm is out!](https://www.github.com/olivkoch/nano-trm)
 - Sept 2025 · [Identity in the Age of Deepfakes](pub/identity-in-the-age-of-deepfakes.pdf)
@@ -43,6 +43,7 @@ Also on [Medium](https://medium.com/@olivier.koch)
 
 ## Featured talks
 
+- Oct 2026 · Search on a small budget with Gumbel MCTS, invited talk at [RoboKraft'26](https://www.alsacedigitale.org/robotkraft) [slides](https://docs.google.com/presentation/d/1z9FbFrcQCsoLgMzgW3o9C5f-XzogwPD0/edit?usp=sharing&ouid=117475941268303028405&rtpof=true&sd=true)  
 - Oct 2024 · Fraud Prevention with Computer Vision in the GenAI age, [AIAI Boston](https://world.aiacceleratorinstitute.com/location/boston/) · [slides](talks/Onfido-AIAI-Boston-2024.pdf)
 - June 2023 · Bringing automation and fairness to identity verification, [ML Prague](https://www.mlprague.com/#schedule-sunday) · [slides](talks/ml-prague-june-2023.pdf)
 - June 2023 · An introduction to ChatGPT and generative AI, Point Nine CTO Meetup · [slides](docs/generative-models-p9-cto-meetup-june-2023.pdf)
